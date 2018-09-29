@@ -1,268 +1,199 @@
+<
 <template>
-  <div class="login">
-  <div class="login-wrapper">
-    <div class="logo-wrapper">
-      <span class="logo"></span>
-      <h4 class="title">VUE登录账号</h4>
+    <div class="login">
+        <div class="header">
+            <div class="login-header">
+                <div class="header-font">欢迎登录</div>
+                    <p class="change-register" @click = "registerLink"> 注册</p>
+            </div>
+            <div class="content">
+                <div style="text-align: center;padding: 0.71rem 0">
+                    <img class="logo" src="../../../images/logo@2x.png" alt="">
+                </div>
+                <form class="mui-input-group">
+                    <div class="mui-input-row">
+                        <label>手机号</label>
+                        <input type="text" class="mui-input-clear phone" name="phone" placeholder="请输入手机号码">
+                    </div>
+                    <div class="mui-input-row">
+                        <label>登录密码</label>
+                        <input type="password" name="password" class="password" placeholder="请输入登录密码">
+                    </div>
+                </form>
+                <div class="login-submit" @click = "loginSubmit"></div>
+            </div>
+        </div>
+        <div class="footer">
+            注册即代表同意<a>《华翼天下服务协议》</a>
+        </div>
     </div>
-    <div class="login-content">
-      <label class="login-user border-1px">
-           <input class="account" autocomplete="off" type="text" v-model="userName" placeholder="账号">
-      </label>
-      <label class="login-password">
-           <input v-show="!pwdVisable" class="password" autocomplete="off" type="text"  v-model="password" placeholder="密码">
-           <input v-show="pwdVisable" class="password" autocomplete="off" type="password" v-model="password" placeholder="密码">
-           <div class="eye_panel pwd-visiable" @click="pwdVisableFn">
-            <i class="eye pwd-eye">
-            <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
-              <path class="eye_outer" d="M0 8 C6 0,14 0,20 8, 14 16,6 16, 0 8 z"></path>
-              <circle class="eye_inner" cx="10" cy="8" r="3"></circle>
-            </svg>
-            </i>
-          </div>
-      </label>
-    </div>
-    <div class="operate">
-      <v-button @btn-click="loginFn" :type="'block'">登录</v-button>
-      <v-button :type="'block'" :color="'secondary'">注册</v-button>
-    </div>
-    <div class="other">
-      <fieldset class="oth_type_tit">
-        <legend align="center" class="oth_type_txt">其他方式登录</legend>
-      </fieldset>
-      <div class="oth_type_links">
-        <a class="icon_type btn_qq sns-login-link" data-type="qq"><i class="btn_sns_icontype icon_default_qq"></i></a>
-        <a class="icon_type btn_weibo sns-login-link" data-type="weibo"><i class="btn_sns_icontype icon_default_weibo"></i></a>
-        <a class="icon_type btn_alipay sns-login-link" data-type="alipay"><i class="btn_sns_icontype icon_default_alipay"></i></a>
-      </div>
-      <div class="links">
-        <a href="" class="register">立即注册</a>
-        <a href="" class="forget">忘记密码？</a>
-      </div>
-    </div>
-  </div>
-  <div class="custom">
-    <ul class="custom-list">
-      <li>简体</li>
-      <li>繁体</li>
-      <li>English</li>
-      <li>常见问题</li>
-    </ul>
-  </div>
-  </div>
 </template>
 
-<script type="text/ecmascript-6">
-import vButton from "base/vButton/vButton";
-
+<script>
 export default {
-  data() {
-    return {
-      pwdVisable: false,
-      userName: "",
-      password: ""
-    };
-  },
-  methods: {
-    pwdVisableFn() {
-      this.pwdVisable = !this.pwdVisable;
+    data() {
+        return {};
     },
-    loginFn(events) {
-      if (!this.userName || !this.password) {
-        let options = {
-          title: "提示",  // 默认标题为 "提示"
-          btn: {
-            text: "确定",
-            style: {} // 可以通过 style 来修改按钮的样式, 比如说粗细, 颜色
-          }
-        };
-        this.$alert("请输入用户名密码", options);
-        this.$store.state.isLogin = false;
-      } else {
-        this.$store.state.isLogin = true;
-        if (this.$route.query.redirect) { // 跳转到指定链接
-          this.$router.push({path: this.$route.query.redirect});
-        } else {
-          this.$router.push({path: "home"});
+    methods: {
+        // 注册 跳转
+        registerLink() {
+            this.$router.push({
+                path: "./register"
+            });
+            $(".tab").hide();
+        },
+        // 登录
+        loginSubmit() {
+            let phone = $(".phone").val();
+            let password = $(".password").val();
+
+            if (phone == "") {
+                mui.toast("账号不能为空", {
+                    duration: "long",
+                    type: "div"
+                });
+            } else if (password == "") {
+                mui.toast("密码不能为空", {
+                    duration: "long",
+                    type: "div"
+                });
+            } else if (phone != "" && !/^1[34578]\d{9}$/.test(phone)) {
+                mui.toast("手机号码格式不正确", {
+                    duration: "long",
+                    type: "div"
+                });
+            } else if (
+                phone != "" &&
+                /^1[34578]\d{9}$/.test(phone) &&
+                password != ""
+            ) {
+                this.$ajax
+                    .post("user/login", {
+                        mobile: phone,
+                        psw: password
+                    })
+                    .then(data => {
+                        if (data.data.code == "200") {
+                            mui.toast("登陆成功", {
+                                duration: "long",
+                                type: "div"
+                            });
+                            this.$router.push({
+                                path: "./home"
+                            });
+                        } else if (data.data.code == "500") {
+                            mui.toast("系统错误", {
+                                duration: "long",
+                                type: "div"
+                            });
+                        } else {
+                            mui.toast(data.data.msg, {
+                                duration: "long",
+                                type: "div"
+                            });
+                        }
+                    });
+            }
         }
-      }
     }
-  },
-  components: {
-    vButton: vButton
-  }
 };
 </script>
 
-<style lang="scss" scoped type="text/css">
-.login{
-  position: absolute;
-  background-color: #eee;
-  box-sizing: border-box;
-  padding: 0 20px;
-  width: 100%;
-  height: 100%;
-  .login-wrapper{
-    width: 100%;
-    height: 100%;
-    .logo-wrapper{
-      padding: 40px 0 22px;
-      text-align: center;
-      .logo{
-        width: 49px;
-        height: 48px;
-        margin: 0 auto 22px;
-        display: block;
-        background-repeat: no-repeat;
-        background-size: contain;
-        display: block;
-        background-image:url(user-logo.png);
-      }
-      .title{
-        font-size: 2rem;
-        color: #424242;
-        font-weight: normal;
-      }
-    }
-    .login-content{
-      input:focus{
-        outline: none;
-      }
-      .login-user{
-        display: block;
-        padding: 0 10px;
-        background-color: #fff;
-        border-radius: 16px 16px 0px 0px;
-        @include border-1px(#c1b5b5);
-        .account{
-          width: 100%;
-          padding: 12px 0;
-          line-height: normal;
-          display: block;
-          font-size: 16px;
-        }
-      }
-      .login-password{
-        display: flex;
-        padding: 0 10px;
-        background-color: #fff;
-        border-radius:  0px 0px 16px 16px;
-        box-align: center;
-        .password{
-          flex: 1;
-          padding: 12px 0;
-          line-height: normal;
-          display: block;
-          font-size: 16px;
-        }
-        .pwd-visiable{
-          padding: 12px 0px 0px 5px;
-          .eye{
-            width: 20px;
-            height: 16px;
-            display: block;
-          }
-        }
-      }
-    }
-    .operate{
-      padding-top: 24px;
-    }
-    .other{
-      padding-top: 15px;
-      .oth_type_tit{
-        border-top: 1px dashed #bdbdbd;
-        padding-top: 10px;
-        .oth_type_links {
-          font-size: 14px;
-          padding-top: 10px;
-          text-align: center;
-          display: -webkit-box;
-          display: box;
-          -webkit-box-pack: center;
-          box-pack: center;
-        }
-      }
-      .oth_type_links {
-          padding-top: 10px;
-          text-align: center;
-          display: -webkit-box;
-          display: box;
-          -webkit-box-pack: center;
-          box-pack: center;
-          .icon_type {
-            width: 45px;
-            height: 45px;
-            margin: 0 10px;
-            display: inline-block;
-            text-indent: -9999px;
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            -o-border-radius: 50%;
-            border-radius: 50%;
-            &.btn_qq {
-              background-color: #0288d1;
-            }
-            &.btn_weibo {
-              background-color: #d32f2f;
-            }
-            &.btn_alipay {
-              background-color: #0ae;
-            }
-            .btn_sns_icontype {
-              background: url(https://account.xiaomi.com/static/res/166d6dc/account-static/respassport/acc-2014/img/iconstype_wap.png);
-              display: block;
-              background-size: auto 19px;
-              width: 26px;
-              height: 19px;
-              background-size: auto 29px;
-              width: 39px;
-              height: 29px;
-              margin: 8px auto 0;
-              &.icon_default_qq {
-                  background-position: 0 0;
-              }
-              &.icon_default_alipay {
-                  background-position: -78px 0;
-              }
-              &.icon_default_alipay {
-                  background-position: -78px 0;
-              }
-            }
-          }
-      }
-      .links{
-        padding: 40px 0 10px;
-        text-align: center;
-        color: #e0e0e0;
-        a{
-          display: inline-block;
-          padding:0px 9px;
-          font-size: 14px;
-        }
-        .register{
-          border-right: solid 1px #757575;
-        }
-      }
-    }
-  }
-  .custom{
+<style scoped>
+.login {
+    font-family: PingFang-SC-Medium;
+    width: 7.5rem;
+    margin: 0 auto;
+}
+.header {
+    width: 7.5rem;
+    position: relative;
+}
+.login-header {
     text-align: center;
-    margin-top: -90px;
-    font-size: 14px;
-    color: #5D656B;
-    .custom-list{
-      li{
-        display: inline-block;
-        padding: 0 9px;
-        border-right: solid 1px #757575;
-      }
-      & li:last-child{
-        border-right: none;
-      }
-    }
-  }
+    width: 7.5rem;
+    height: 0.88rem;
+    background: rgba(255, 255, 255, 1);
+    border-bottom: 1px solid rgba(230, 230, 230, 1);
+    /*position:relative;*/
+}
+
+.change-register {
+    /*width:0.58rem;*/
+    height: 0.29rem;
+    font-size: 0.3rem;
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+    position: absolute;
+    right: 0.24rem;
+    top: 0.3rem;
+}
+.header-font {
+    /*width:1.42rem;*/
+    text-align: center;
+    height: 0.34rem;
+    font-size: 0.36rem;
+
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+    padding: 0.27rem 0;
+}
+.logo {
+    width: 1.97rem;
+    margin: 0 auto;
+}
+.mui-input-group:before {
+    height: 0;
+}
+.mui-input-row {
+    height: 0.98rem;
+}
+.mui-input-row label {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    line-height: 1.1;
+    float: left;
+    width: 35%;
+    padding: 0.45rem 15px;
+    font-size: 0.3rem;
+}
+.mui-input-row label ~ input {
+    float: right;
+    width: 65%;
+    margin-bottom: 0;
+    height: 1.25rem;
+    padding-left: 0;
+    border: 0;
+}
+.mui-input-group .mui-input-row:after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0px;
+    height: 1px;
+    content: "";
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    background-color: #c8c7cc;
+}
+
+.footer {
+    width: 100%;
+    margin: 0 auto;
+    position: absolute;
+    left: 0;
+    bottom: 50px;
+    text-align: center;
+    font-size: 0.26rem;
+}
+.footer a {
+    color: #64cbf7;
+}
+
+.login-submit {
+    margin-top: 0.78rem;
+    width: 7.24rem;
+    height: 1.11rem;
+    background-image: url(../../../images/dl@2x.png);
+    background-size: 100% 100%;
 }
 </style>
-
-

@@ -1,146 +1,208 @@
 <template>
-    <div class="userinfo">
-      <div>
-        <div class="title border-1px">VUE账号</div>
-        <div class="user-content">
-          <div class="user-wrapper border-1px">
-            <span class="portrait icon-uniF1A1F9"></span>
-            <div class="user-detail">
-              <p class="name">请设置名字</p>
-              <p class="acoount">1471809</p>
+    <div class="project-box">
+        <ul class="project-title">
+            <li @click="nyzbFn" class="native">众筹矿机</li>
+            <li @click="mhgxFn">纵横矿机</li>
+        </ul>
+
+        <div class="con-box1">
+            <div class="header-img">
+                <img src="../../../images/img8.png" alt="">
             </div>
-          </div>
-          <p class="security">安全等级75分存在1项风险</p>
+            <div class="nyzb">
+                <div class="nyzb-title">
+                    <span class="title1">农用植保</span>
+                    <span class="title2">认购纵购</span>
+                </div>
+                <div class="nyzb-con">
+                    <div class="nyzb-con-left left1">
+                        <span class="percenter">150%</span>
+                        <br>会员分红总回报率
+                    </div>
+
+                    <div class="nyzb-con-left left2">
+                        <span class="font-weight">1000元开始认购</span> <br> 会员20天认购开始分红
+                        <br>
+                    </div>
+                </div>
+                <div class="dl">认购众筹</div>
+            </div>
+            <div class="nyzb">
+                <div class="nyzb-title">
+                    <span class="title1">农用植保</span>
+                    <span class="title2">代理升级</span>
+                </div>
+                <div class="nyzb-con2">
+                    业务经理开通三个业绩部门后，当小部门业绩达到15万时，有资格申请区域代理
+                </div>
+                <div class="dl">升级代理</div>
+            </div>
         </div>
-        <v-item-list>
-          <v-item-header :item-header="'基本资料'"></v-item-header>
-          <v-item @item-click="toUpdatePassword" :item-text="'账号密码'" :item-note="'修改'" :item-icon="'icon-uniF1BAF9'"></v-item>
-          <v-item :item-text="'安全邮箱'" :item-note="'8767...@qq.com'" :item-icon="'icon-uniF1E5F9'"></v-item>
-          <v-item :item-text="'安全手机'" :item-note="'1471....83'" :item-icon="'icon-uniF1FEF9'"></v-item>
-          <v-item :item-text="'密保问题'" :item-note="'未设置'" :item-icon="'icon-uniF1FEF9'"></v-item>
-        </v-item-list>
-        <v-item-list>
-          <v-item-header :item-header="'推荐使用'"></v-item-header>
-          <v-item :item-text="'安全令牌'" :item-note="'开启'" :item-icon="'icon-uniF200F9'"></v-item>
-        </v-item-list>
-        <v-item-list>
-          <v-item-header :item-header="'其它'"></v-item-header>
-          <v-item :item-text="'修改个人资料'" :item-note="''" :item-icon="'icon-uniF200F9'"></v-item>
-          <v-item :item-text="'绑定授权'" :item-note="''" :item-icon="'icon-uniF200F9'"></v-item>
-      </v-item-list>
-      <div class="logout"><v-button @btn-click="logoutFn" :type="'block'">退出</v-button></div>
+        <div class="con-box2" style="display:none;">
+            <div class="header-img">
+                <img src="../../../images/img6.png" alt="">
+            </div>
+            <div class="nyzb">
+                <div class="nyzb-title">
+                    <span class="title1">明航共享</span>
+                    <span class="title2">民航共享众筹股东</span>
+                </div>
+                <div class="nyzb-con">
+                    <div class="nyzb-con-left left1">
+                        <span class="percenter">150%</span>
+                        <br>销售业绩提成
+                    </div>
+
+                    <div class="nyzb-con-left left2">
+                        <span class="percenter">30万</span> <br> 股东的股权基金比例
+                        <br>
+                    </div>
+                </div>
+                <div class="dl">认购众筹</div>
+            </div>
+            <div class="nyzb">
+                <div class="nyzb-title">
+                    <span class="title1">民航共享</span>
+                    <span class="title2">民航共享会员</span>
+                </div>
+                <div class="nyzb-con2">
+                    业务经理开通三个业绩部门后，当小部门业绩达到15万时，有资格申请区域代理
+                </div>
+                <div class="dl">共享会员</div>
+            </div>
+        </div>
     </div>
-    <update-password ref="updatePassword"></update-password>
-  </div>
 </template>
 
-<script type="text/ecmascript-6">
-import BScroll from "better-scroll";
-import vItemList from "base/vItemList/vItemList";
-import vItem from "base/vItemList/vItem";
-import vItemHeader from "base/vItemList/vItemHeader";
-import updatePassword from "components/updatePassword/updatePassword";
-import vButton from "base/vButton/vButton";
-
-export default {
-  created() {
-    // setTimeout(() => {
-    //   this._initScroll();
-    // }, 20);
-    this.$nextTick(() => {
-      this._initScroll();
+<script>
+window.onload = function() {
+    $(".project-title li").click(function() {
+        $(this).removeClass("native");
+        $(this)
+            .addClass("native")
+            .siblings()
+            .removeClass("native");
     });
-  },
-  methods: {
-    _initScroll() { // 实现滚动
-      if (!this.itemScroll) {
-        this.itemScroll = new BScroll(this.$el, {
-          click: true
-        });
-      } else {
-        this.itemScroll.refresh();
-      }
+};
+export default {
+    data() {
+        return {};
     },
-    toUpdatePassword(event) {
-      if (!event._constructed) {
-        return;
-      }
-      this.$refs.updatePassword.showFn();
-    },
-    logoutFn(event) {
-      if (!event._constructed) {
-        return;
-      }
-      this.$store.state.isLogin = false;
-      this.$router.go({path: "/login"});
+    methods: {
+        mhgxFn() {
+            $(".con-box1").hide();
+            $(".con-box2").show();
+        },
+        nyzbFn() {
+            $(".con-box1").show();
+            $(".con-box2").hide();
+        }
     }
-  },
-  components: {
-    vItemList: vItemList,
-    vItem: vItem,
-    vItemHeader: vItemHeader,
-    updatePassword: updatePassword,
-    vButton: vButton
-  }
 };
 </script>
-
-<style lang="scss" scoped type="text/css">
-.userinfo{
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  bottom: 42px;
-  width: 100%;
-  overflow: hidden;
-  color: #333;
-  .title{
-    padding: 20px;
-    height: 31px;
-    font-size: 16px;
-    line-height: 31px;
-    color: #ff6a2a;
-    font-weight: 700;
-    background: #f6f6f6;
-    @include border-1px(#f1f1f1);
-  }
-  .user-wrapper{
-    padding: 10px 0;
-    margin: 0 20px;
-    font-size: 0px;
+<style>
+.project-box {
+    background: #f0f0f0;
+    padding: 0;
+    margin: 0;
+}
+ul,
+li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.project-title {
+    width: 7.5rem;
+    height: 0.88rem;
+    font-size: 0.3rem;
+    background: #2dc1f7;
     display: flex;
-    @include border-1px(#c8c7cc);
-    .portrait{
-      font-size: 40px;
-      display: inline-block;
-      width: 50px;
-      height: 50px;
-      line-height: 50px;
-      text-align: center;
-      border: solid 1px #7e7575;
-      border-radius: 50%;
-    }
-    .user-detail{
-      display: inline-block;
-      margin-left: 10px;
-      flex: 1;
-      font-size: 14px;
-      .name{
-        height: 30px;
-        line-height: 30px;
-      }
-    }
-  }
-  .security{
-    background-color: #fff;
-    font-size: 16px;
-    padding: 16px;
-  }
-  .logout{
-    padding: 16px;
-  }
+    line-height: 0.88rem;
+    color: #fff;
+    margin: 0 auto;
+    text-align: center;
+}
+.project-title li {
+    margin: 0 auto;
+}
+.native {
+    border-bottom: 2px solid #fff;
+}
+
+.header-img {
+    /* margin-top: 0.2rem; */
+    width: 7.28rem;
+    height: 2.18rem;
+    margin: 0.22rem auto 0.2rem;
+}
+
+.header-img img {
+    width: 7.28rem;
+    height: 2.18rem;
+}
+.nyzb {
+    width: 7.49rem;
+    /* height: 3.86rem; */
+    background: #fff;
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.2rem;
+}
+.nyzb-title {
+    width: 7.02rem;
+    margin: 0 auto;
+    padding: 0.32rem 0.2rem;
+    border-bottom: 1px solid #e6e6e6;
+}
+.nyzb-con {
+    margin: 0.48rem auto;
+    display: flex;
+}
+.nyzb-con2 {
+    margin: 0.48rem auto;
+    width: 6.11rem;
+    font-weight: 500;
+    line-height: 0.4rem;
+    font-size: 0.24rem;
+}
+.nyzb-con .nyzb-con-left {
+    margin: 0% auto;
+    text-align: center;
+    font-size: 0.24rem;
+    line-height: 0.5rem;
+}
+
+.dl {
+    width: 3.08rem;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    text-align: center;
+    margin: 0.5rem auto 0.33rem;
+    background: #64cbf7;
+    color: #fff;
+    border-radius: 0.66rem;
+}
+.title1 {
+    font-size: 0.3rem;
+    font-weight: bold;
+}
+.title2 {
+    font-size: 0.24rem;
+    color: #999;
+}
+.left1 {
+    border-right: 1px solid #c6c6c6;
+    padding-right: 1rem;
+}
+.left2 {
+    margin-right: 1rem;
+    line-height: 0.6rem;
+}
+.font-weight {
+    font-weight: bold;
+}
+.percenter {
+    color: #ff4f4f;
+    font-size: 0.6rem;
 }
 </style>
-
-
-

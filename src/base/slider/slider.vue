@@ -1,5 +1,5 @@
 <template>
-  <div class="slider" ref="slider">
+  <!-- <div class="slider" ref="slider">
     <div class="slider-group" ref="sliderGroup">
       <slot>
       </slot>
@@ -7,7 +7,7 @@
     <div class="dots">
       <span class="dot" :class="{active: currentPageIndex === index}"  v-for="(item, index) in dots">{{currentPageIndex}}</span>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script type="text/ecmascript-6">
