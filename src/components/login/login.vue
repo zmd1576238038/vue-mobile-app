@@ -20,7 +20,7 @@
                         <input type="password" name="password" class="password" placeholder="请输入登录密码">
                     </div>
                 </form>
-                <div class="login-submit" @click = "loginSubmit"></div>
+                <div class="btn" @click = "loginSubmit">登录</div>
             </div>
         </div>
         <div class="footer">
@@ -81,6 +81,11 @@ export default {
                             this.$router.push({
                                 path: "./home"
                             });
+
+                            sessionStorage.setItem(
+                                "mobile",
+                                JSON.stringify(data.data.obj)
+                            );
                         } else if (data.data.code == "500") {
                             mui.toast("系统错误", {
                                 duration: "long",
@@ -100,6 +105,9 @@ export default {
 </script>
 
 <style scoped>
+.app {
+    background: #fff;
+}
 .login {
     font-family: PingFang-SC-Medium;
     width: 7.5rem;
@@ -189,11 +197,27 @@ export default {
     color: #64cbf7;
 }
 
-.login-submit {
+/* .login-submit {
     margin-top: 0.78rem;
     width: 7.24rem;
     height: 1.11rem;
     background-image: url(../../../images/dl@2x.png);
     background-size: 100% 100%;
+} */
+
+.btn {
+    width: 7.01rem;
+    height: 0.95rem;
+    border-radius: 0.48rem;
+    background: #64cbf7;
+    color: #fff;
+    font-size: 0.3rem;
+    font-weight: 500;
+    line-height: 0.95rem;
+    text-align: center;
+    margin: 0.66rem auto 0rem;
+}
+.btn:hover {
+    opacity: 0.8;
 }
 </style>

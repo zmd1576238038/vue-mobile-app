@@ -33,6 +33,9 @@ import zccz from "components/center_slice/zccz";
 // 交易明细
 import jymx from "components/center_slice/jymx";
 
+// 钱包 地址
+import moenyAddress from "components/center_slice/moneyBagAddress";
+
 import Vue from "vue";
 import Router from "vue-router";
 Vue.use(Router);
@@ -162,15 +165,24 @@ const router = new Router({
                 meta: {
                     auth: false
                 }
-            }, {
+            },
+            {
                 path: "/jymx",
                 name: "jymx",
                 component: jymx,
                 meta: {
                     auth: false
                 }
-            }
 
+            },
+            {
+                path: "/moenyAddress",
+                name: "moenyAddress",
+                component: moenyAddress,
+                meta: {
+                    auth: false
+                }
+            }
 
 
 

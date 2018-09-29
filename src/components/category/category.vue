@@ -1,8 +1,8 @@
 <template>
     <div class="project-box">
         <ul class="project-title">
-            <li @click="nyzbFn" class="native">农用质保</li>
-            <li @click="mhgxFn">明航共享</li>
+            <li @click="nyzbFn" class="active1" style="border-bottom:2px solid #fff;">农用质保</li>
+            <li @click="mhgxFn" class="active2">明航共享</li>
         </ul>
 
         <div class="con-box1">
@@ -92,10 +92,16 @@ export default {
         mhgxFn() {
             $(".con-box1").hide();
             $(".con-box2").show();
+
+            $(".active2").css("borderBottom", "2px solid #fff");
+            $(".active1").css("borderBottom", "");
         },
         nyzbFn() {
             $(".con-box1").show();
             $(".con-box2").hide();
+
+            $(".active1").css("borderBottom", "2px solid #fff");
+            $(".active2").css("borderBottom", "");
         }
     }
 };
