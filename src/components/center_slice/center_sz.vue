@@ -39,14 +39,12 @@
                 <label>邮箱绑定</label>
                 <input type="number" class="sendMsg mui-input-clear">
             </div>
-
             <div class="mui-input-row" @click="moenyAddress">
                 <img class="fr" src="../../../images/center_slices/xztb@2x.png" alt="">
                 <label>绑定钱包地址</label>
                 <input type="text" class="sendMsg mui-input-clear">
             </div>
         </form>
-
         <ul class="mui-table-view">
             <li class="mui-table-view-cell">
                 <a class="mui-navigate-right">密码管理</a>

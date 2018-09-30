@@ -13,7 +13,6 @@
                     <div class="jf" v-if="item.jyTypeId == 1">{{item.money}}{{item.kindName}}</div>
                     <div class="jf" v-else style="color:#F84040;">-{{item.money}}{{item.kindName}}</div>
                     <div class="date">{{item.jyTime.substring(0,10)}}</div>
-
                 </div>
             </div>
         </div>

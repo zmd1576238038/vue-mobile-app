@@ -36,6 +36,27 @@ import jymx from "components/center_slice/jymx";
 // 钱包 地址
 import moenyAddress from "components/center_slice/moneyBagAddress";
 
+// 商品详情
+import shopping from "components/center_slice/shopping";
+
+//详情
+
+import shopDetailMsg from "components/center_slice/shopDetailMsg";
+// 42
+import fourTkj from "components/center_slice/fourTkj";
+// 72
+import seventyTwoTkj from "components/center_slice/seventyTwoTkj";
+
+
+// 转账购买
+import zzgm from "components/center_slice/zzgm";
+
+// 余额购买
+import yegm from "components/center_slice/yegm";
+
+// 项目详情
+
+import xmDetial from "components/center_slice/xm_detial";
 import Vue from "vue";
 import Router from "vue-router";
 Vue.use(Router);
@@ -182,7 +203,64 @@ const router = new Router({
                 meta: {
                     auth: false
                 }
+            },
+            {
+                path: "/shopping",
+                name: "shopping",
+                component: shopping,
+                meta: {
+                    auth: false
+                }
+            },
+            {
+                path: "/fourTkj",
+                name: "fourTkj",
+                component: fourTkj,
+                meta: {
+                    auth: false
+                }
+            },
+            {
+                path: "/seventyTwoTkj",
+                name: "seventyTwoTkj",
+                component: seventyTwoTkj,
+                meta: {
+                    auth: false
+                }
+            },
+            {
+                path: "/shopDetailMsg",
+                name: "shopDetailMsg",
+                component: shopDetailMsg,
+                meta: {
+                    auth: false
+                }
+            },
+            {
+                path: "/zzgm",
+                name: "zzgm",
+                component: zzgm,
+                meta: {
+                    auth: false
+                }
+            },
+            {
+                path: "/yegm",
+                name: "yegm",
+                component: yegm,
+                meta: {
+                    auth: false
+                }
+            },
+            {
+                path: "/xmDetial",
+                name: "xmDetial",
+                component: xmDetial,
+                meta: {
+                    auth: false
+                }
             }
+
 
 
 

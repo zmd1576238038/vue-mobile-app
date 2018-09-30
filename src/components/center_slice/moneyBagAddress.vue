@@ -8,21 +8,24 @@
 
                 <p class="mui-input-row">
                     <label>钱包地址</label>
-                    <!-- <input type="text" class="" placeholder="选择绑定钱包地址"> -->
-                    <select>
-                        <option value=""></option>
+                    <select class="tabIndex">
+                        <option value="" v-for="(item,index) in getAddress" :value="item.walletName" :label="item.walletName">{{item.walletName}}
+                            <!-- <span class="tabIndex" style="display:none;">
+                                {{item.id}}
+                            </span> -->
+                        </option>
                     </select>
-                    <a href=""></a>
+
                 </p>
-                <p class="mui-input-row">
+                <p class=" mui-input-row ">
                     <label>钱包账号</label>
-                    <input type="number" class="" placeholder="输入钱包账号账号">
+                    <input type="number " class="account" placeholder="输入钱包账号账号 ">
                 </p>
-                <p class="mui-input-row">
+                <p class="mui-input-row ">
                     <label>确认账号</label>
-                    <input type="number" class="" placeholder="再次输入钱包账号账号">
+                    <input type="number " class="account2" placeholder="再次输入钱包账号账号 ">
                 </p>
-                <div class="btn">完成</div>
+                <div class="btn" @click="getSubmit">完成</div>
             </form>
 
         </div>
@@ -31,7 +34,69 @@
 
 <script>
 export default {
-    name: "money-bag-address"
+    data() {
+        return {
+            // 获取地址
+            getAddress: ""
+        };
+    },
+    methods: {
+        getAccoundAddress() {
+            this.$ajax.get("user/gm/wallet").then(data => {
+                this.getAddress = data.data.obj;
+            });
+        },
+        getSubmit() {
+            let tabIndex = $(".tabIndex option:checked").val();
+            let account = $(".account").val();
+            let account2 = $(".account2").val();
+            let mobile = JSON.parse(sessionStorage.getItem("mobile"));
+
+            if (account == "" || account2 == "") {
+                mui.toast("钱包账号不能为空", {
+                    duration: "long",
+                    type: "div"
+                });
+            } else if (account != account2) {
+                mui.toast("钱包账号不一致", {
+                    duration: "long",
+                    type: "div"
+                });
+            } else {
+                this.$ajax
+                    .post("user/wallet/add", {
+                        walletName: tabIndex,
+                        walletAc: account,
+                        mobile: mobile,
+                        walletAcTwo: account2
+                    })
+                    .then(data => {
+                        if (data.data.code == 200) {
+                            mui.toast("操作成功", {
+                                duration: "long",
+                                type: "div"
+                            });
+                            this.$router.push({
+                                path: "./accountSet"
+                            });
+                        } else if (data.data.code == "500") {
+                            mui.toast("系统错误", {
+                                duration: "long",
+                                type: "div"
+                            });
+                        } else {
+                            mui.toast(data.data.msg, {
+                                duration: "long",
+                                type: "div"
+                            });
+                        }
+                    });
+            }
+        }
+    },
+    mounted() {
+        this.getAccoundAddress();
+    }
 };
 </script>
 

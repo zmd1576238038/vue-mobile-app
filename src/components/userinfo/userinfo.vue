@@ -153,10 +153,16 @@ export default {
             });
         },
         // 纵横矿机
-        handleLook(index) {},
+        handleLook(index) {
+            this.$router.push({
+                path: "./shopping"
+            });
+        },
         // 众筹矿机
         handleLook2(index) {
-            alert(index);
+            this.$router.push({
+                path: "./xmDetial"
+            });
         }
     },
     mounted() {
